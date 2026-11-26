@@ -19,29 +19,29 @@
 
         <ui:NavigationView x:Name="RootNavigation" Grid.Row="1"
                            PaneDisplayMode="Left" IsBackButtonVisible="Collapsed"
-                           OpenPaneLength="180">
+                           OpenPaneLength="195">
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="主界面" Icon="{ui:SymbolIcon Home24}"
+                <ui:NavigationViewItem Content="Главная" Icon="{ui:SymbolIcon Home24}"
                                        TargetPageType="{x:Type pages:DashboardPage}"
                                        NavigationCacheMode="Required" />
-                <ui:NavigationViewItem Content="播放器" Icon="{ui:SymbolIcon MusicNote124}"
+                <ui:NavigationViewItem Content="Плееры" Icon="{ui:SymbolIcon MusicNote124}"
                                        TargetPageType="{x:Type pages:PlayersPage}"
                                        NavigationCacheMode="Disabled" />
-                <ui:NavigationViewItem Content="挂时长" Icon="{ui:SymbolIcon Games24}"
+                <ui:NavigationViewItem Content="Фарм часов" Icon="{ui:SymbolIcon Games24}"
                                        TargetPageType="{x:Type pages:GameIdlePage}"
                                        NavigationCacheMode="Disabled" />
-                <ui:NavigationViewItem Content="桌面" Icon="{ui:SymbolIcon Desktop24}"
+                <ui:NavigationViewItem Content="Рабочий стол" Icon="{ui:SymbolIcon Desktop24}"
                                        TargetPageType="{x:Type pages:DesktopPage}"
                                        NavigationCacheMode="Disabled" />
-                <ui:NavigationViewItem Content="日志" Icon="{ui:SymbolIcon History24}"
+                <ui:NavigationViewItem Content="Журнал" Icon="{ui:SymbolIcon History24}"
                                        TargetPageType="{x:Type pages:LogsPage}"
                                        NavigationCacheMode="Disabled" />
-                <ui:NavigationViewItem Content="设置" Icon="{ui:SymbolIcon Settings24}"
+                <ui:NavigationViewItem Content="Настройки" Icon="{ui:SymbolIcon Settings24}"
                                        TargetPageType="{x:Type pages:SettingsPage}"
                                        NavigationCacheMode="Disabled" />
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.FooterMenuItems>
-                <ui:NavigationViewItem Content="关于" Icon="{ui:SymbolIcon Info24}"
+                <ui:NavigationViewItem Content="О программе" Icon="{ui:SymbolIcon Info24}"
                                        TargetPageType="{x:Type pages:AboutPage}"
                                        NavigationCacheMode="Disabled" />
             </ui:NavigationView.FooterMenuItems>

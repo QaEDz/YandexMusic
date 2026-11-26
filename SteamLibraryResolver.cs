@@ -37,34 +37,34 @@ internal sealed class SteamLibraryResolver(SteamSessionManager session)
         var apps = session.SteamAppsHandler;
         if (apps == null || !session.IsLoggedOn)
         {
-            throw new InvalidOperationException("Steam 未登录，无法读取游戏库存");
+            throw new InvalidOperationException("Нет входа в Steam — не удалось загрузить библиотеку");
         }
 
-        progress?.Report("等待 Steam 许可证列表…");
+        progress?.Report("Ожидание списка лицензий Steam…");
         var packages = await session.WaitForLicensesAsync(cancellationToken).ConfigureAwait(false);
         if (packages.Count == 0)
         {
-            throw new InvalidOperationException("未获取到 Steam 许可证列表");
+            throw new InvalidOperationException("Не удалось получить список лицензий Steam");
         }
 
         // 1) 套餐（package）→ 其包含的全部 appid
-        progress?.Report("解析套餐包含的应用…");
+        progress?.Report("Разбор подписок и наборов…");
         var appIds = new HashSet<uint>();
         var packageChunks = Chunk(packages, PicsChunkSize).ToList();
         for (var i = 0; i < packageChunks.Count; i++)
         {
-            progress?.Report($"解析套餐 {i + 1}/{packageChunks.Count}…");
+            progress?.Report($"Обработка пакетов {i + 1}/{packageChunks.Count}…");
             await FetchPackageAppIdsAsync(apps, packageChunks[i], appIds, cancellationToken).ConfigureAwait(false);
         }
         appIds.Remove(0);
 
         // 2) appid → 名称/类型，只保留真正的「游戏」
-        progress?.Report("读取游戏名称…");
+        progress?.Report("Загрузка названий игр…");
         var games = new Dictionary<uint, string>();
         var appChunks = Chunk(appIds, PicsChunkSize).ToList();
         for (var i = 0; i < appChunks.Count; i++)
         {
-            progress?.Report($"读取游戏信息 {i + 1}/{appChunks.Count}…");
+            progress?.Report($"Загрузка игр {i + 1}/{appChunks.Count}…");
             await FetchAppNamesAsync(apps, appChunks[i], games, cancellationToken).ConfigureAwait(false);
         }
 
@@ -74,7 +74,7 @@ internal sealed class SteamLibraryResolver(SteamSessionManager session)
             .ThenBy(g => g.AppId)
             .ToList();
         SaveCache(result);
-        progress?.Report($"库存读取完成，共 {result.Count} 个游戏");
+        progress?.Report($"Готово! Найдено игр: {result.Count}");
         return result;
     }
 
@@ -162,7 +162,7 @@ internal sealed class SteamLibraryResolver(SteamSessionManager session)
         var completed = await Task.WhenAny(jobTask, Task.Delay(PicsTimeout, ct)).ConfigureAwait(false);
         if (completed != jobTask)
         {
-            throw new TimeoutException("Steam PICS 请求超时");
+            throw new TimeoutException("Превышено время ожидания ответа Steam PICS");
         }
         return await jobTask.ConfigureAwait(false);
     }
@@ -174,7 +174,7 @@ internal sealed class SteamLibraryResolver(SteamSessionManager session)
         var completed = await Task.WhenAny(jobTask, Task.Delay(PicsTimeout, ct)).ConfigureAwait(false);
         if (completed != jobTask)
         {
-            throw new TimeoutException("Steam PICS 请求超时");
+            throw new TimeoutException("Превышено время ожидания ответа Steam PICS");
         }
         var resultSet = await jobTask.ConfigureAwait(false);
         return (IEnumerable<T>?)resultSet.Results ?? Array.Empty<T>();

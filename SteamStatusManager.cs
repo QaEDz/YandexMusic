@@ -113,8 +113,8 @@ internal class SteamStatusManager
 
     private static string FormatRealtimeActivity(string appName)
     {
-        var name = string.IsNullOrWhiteSpace(appName) ? "未知应用" : appName.Trim();
-        return TruncateToUtf8ByteLength($"正在使用 {name}", MaxStatusUtf8Bytes);
+        var name = string.IsNullOrWhiteSpace(appName) ? "Неизвестное приложение" : appName.Trim();
+        return TruncateToUtf8ByteLength($"Сейчас в {name}", MaxStatusUtf8Bytes);
     }
 
     /// <summary>返回空闲时应显示的签名（已去除首尾空白并截断到 Steam 字节上限）；未启用或内容为空时返回 null。</summary>

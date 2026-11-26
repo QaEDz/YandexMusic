@@ -117,8 +117,8 @@ public partial class MainWindow : FluentWindow
         var afterMemory = MemoryPressureMonitor.GetCurrentMemoryUsage();
         var freedMemory = beforeMemory - afterMemory;
         MessageBox.Show(
-            $"缓存清理完成！\n清理前: {beforeMemory / 1024 / 1024:F1} MB\n清理后: {afterMemory / 1024 / 1024:F1} MB\n释放: {freedMemory / 1024 / 1024:F1} MB\n\n提示: 按 Ctrl+R 可随时清理缓存",
-            "缓存清理", MessageBoxButton.OK, MessageBoxImage.Information);
+            $"Кэш очищен!\nДо очистки: {beforeMemory / 1024 / 1024:F1} МБ\nПосле: {afterMemory / 1024 / 1024:F1} МБ\nОсвобождено: {freedMemory / 1024 / 1024:F1} МБ\n\nПодсказка: нажимайте Ctrl+R, чтобы очистить кэш в любой момент",
+            "Очистка кэша", MessageBoxButton.OK, MessageBoxImage.Information);
         e.Handled = true;
     }
 }

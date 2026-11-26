@@ -21,7 +21,7 @@ public partial class App : Application
         _mutex = new Mutex(true, "MuSyncMutex", out var isNewInstance);
         if (!isNewInstance)
         {
-            MessageBox.Show("MuSync is already running.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("MuSync уже запущен.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             Shutdown();
             return;
         }

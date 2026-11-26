@@ -255,14 +255,14 @@ internal class SteamSessionManager : IDisposable
     {
         if (_steamClient == null)
         {
-            LoginError = "Steam 客户端未初始化";
+            LoginError = "Клиент Steam не инициализирован";
             return false;
         }
         if (!IsConnected)
         {
             if (!WaitForConnection())
             {
-                LoginError = "无法连接到 Steam 服务器";
+                LoginError = "Не удалось подключиться к серверам Steam";
                 return false;
             }
         }
@@ -320,19 +320,19 @@ internal class SteamSessionManager : IDisposable
                     return false;
                 }
             }
-            LoginError = "登录超时";
+            LoginError = "Превышено время ожидания входа";
             return false;
         }
         catch (AuthenticationException ex)
         {
-            LoginError = $"认证失败: {ex.Result} - {ex.Message}";
+            LoginError = $"Ошибка авторизации: {ex.Result} — {ex.Message}";
             Debug.WriteLine($"[SteamSession] {LoginError}");
             Logger.Error($"[SteamSession] {LoginError}");
             return false;
         }
         catch (Exception ex)
         {
-            LoginError = $"登录异常: {ex.Message}";
+            LoginError = $"Ошибка входа: {ex.Message}";
             Debug.WriteLine($"[SteamSession] {LoginError}");
             Logger.Error($"[SteamSession] {LoginError}");
             return false;
@@ -343,14 +343,14 @@ internal class SteamSessionManager : IDisposable
     {
         if (_steamClient == null)
         {
-            LoginError = "Steam 客户端未初始化";
+            LoginError = "Клиент Steam не инициализирован";
             return false;
         }
         if (!IsConnected)
         {
             if (!WaitForConnection())
             {
-                LoginError = "无法连接到 Steam 服务器";
+                LoginError = "Не удалось подключиться к серверам Steam";
                 return false;
             }
         }

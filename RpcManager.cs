@@ -42,6 +42,7 @@ internal class RpcManager(SteamStatusManager steamManager)
     private readonly PlayerState _netEaseState = new();
     private readonly PlayerState _tencentState = new();
     private readonly PlayerState _sodaMusicState = new();
+    private readonly PlayerState _yandexMusicState = new();
     private volatile bool _stateRefreshRequested;
     private bool _realGameActivePreviously;
     private bool _wasLoggedOn;
@@ -75,7 +76,7 @@ internal class RpcManager(SteamStatusManager steamManager)
                 _netEaseState is { Player: not null, LastPolledInfo: not null }
                     ? _netEaseState.LastPolledInfo
                     : null,
-                "网易云音乐",
+                "NetEase Music",
                 _netEaseState.Player != null,
                 _netEaseState.LastError
             ),
@@ -83,7 +84,7 @@ internal class RpcManager(SteamStatusManager steamManager)
                 _tencentState is { Player: not null, LastPolledInfo: not null }
                     ? _tencentState.LastPolledInfo
                     : null,
-                "QQ音乐",
+                "QQ Music",
                 _tencentState.Player != null,
                 _tencentState.LastError
             ),
@@ -91,22 +92,31 @@ internal class RpcManager(SteamStatusManager steamManager)
                 _sodaMusicState is { Player: not null, LastPolledInfo: not null }
                     ? _sodaMusicState.LastPolledInfo
                     : null,
-                "汽水音乐",
+                "Soda Music",
                 _sodaMusicState.Player != null,
                 _sodaMusicState.LastError
+            ),
+            (
+                _yandexMusicState is { Player: not null, LastPolledInfo: not null }
+                    ? _yandexMusicState.LastPolledInfo
+                    : null,
+                "Яндекс Музыка",
+                _yandexMusicState.Player != null,
+                _yandexMusicState.LastError
             )
         ];
     }
 
     /// <summary>
     /// 挑选当前应占据 Steam 状态的播放器：仅"正在播放（未暂停）"者才算活跃源。
-    /// 暂停中的播放器只刷新本地界面，Steam 状态走空闲签名；多个同时播放时按 网易云 → QQ → 汽水 取最先者。
+    /// 暂停中的播放器只刷新本地界面，Steam 状态走空闲签名；多个同时播放时按 网易云 → QQ → 汽水 → Яндекс Музыка 取最先者。
     /// </summary>
     private (PlayerState? State, string Name) ResolveActiveState()
     {
-        if (_netEaseState is { Player: not null, LastPolledInfo: { Pause: false } }) return (_netEaseState, "网易云音乐");
-        if (_tencentState is { Player: not null, LastPolledInfo: { Pause: false } }) return (_tencentState, "QQ音乐");
-        if (_sodaMusicState is { Player: not null, LastPolledInfo: { Pause: false } }) return (_sodaMusicState, "汽水音乐");
+        if (_netEaseState is { Player: not null, LastPolledInfo: { Pause: false } }) return (_netEaseState, "NetEase Music");
+        if (_tencentState is { Player: not null, LastPolledInfo: { Pause: false } }) return (_tencentState, "QQ Music");
+        if (_sodaMusicState is { Player: not null, LastPolledInfo: { Pause: false } }) return (_sodaMusicState, "Soda Music");
+        if (_yandexMusicState is { Player: not null, LastPolledInfo: { Pause: false } }) return (_yandexMusicState, "Яндекс Музыка");
         return (null, "");
     }
 
@@ -273,14 +283,13 @@ internal class RpcManager(SteamStatusManager steamManager)
                     RecordPollSuccess(_tencentState);
                 }
 
-                var sodaProcess = Process.GetProcessesByName("SodaMusic").FirstOrDefault();
-                if (sodaProcess != null)
+                if (TryFindProcessId("SodaMusic") is { } sodaPid)
                 {
                     anyPlayerActive = true;
                     try
                     {
                         // 汽水音乐通过 Windows 系统媒体会话（SMTC）读取，无需访问进程内存
-                        await PollAndUpdatePlayer(_sodaMusicState, "SodaMusic", sodaProcess.Id,
+                        await PollAndUpdatePlayer(_sodaMusicState, "SodaMusic", sodaPid,
                             pid => new SodaMusic(pid), currentTime);
                         RecordPollSuccess(_sodaMusicState);
                     }
@@ -294,6 +303,28 @@ internal class RpcManager(SteamStatusManager steamManager)
                 {
                     CleanupPlayerState(_sodaMusicState, "SodaMusic");
                     RecordPollSuccess(_sodaMusicState);
+                }
+
+                if (TryFindProcessId("Яндекс Музыка", "YandexMusic", "Yandex.Music") is { } yandexPid)
+                {
+                    anyPlayerActive = true;
+                    try
+                    {
+                        // Яндекс Музыка 通过 Windows 系统媒体会话（SMTC）读取，无需访问进程内存
+                        await PollAndUpdatePlayer(_yandexMusicState, "Яндекс Музыка", yandexPid,
+                            pid => new YandexMusic(pid), currentTime);
+                        RecordPollSuccess(_yandexMusicState);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"[YandexMusic] Error: {ex.Message}");
+                        _yandexMusicState.LastError = ErrorCode.None;
+                    }
+                }
+                else
+                {
+                    CleanupPlayerState(_yandexMusicState, "Яндекс Музыка");
+                    RecordPollSuccess(_yandexMusicState);
                 }
 
                 // 登录状态边沿（首次登录/手动重登/断线重连后）：强制重推一次，
@@ -418,9 +449,33 @@ internal class RpcManager(SteamStatusManager steamManager)
         CleanupPlayerState(_netEaseState, "NetEase CloudMusic");
         CleanupPlayerState(_tencentState, "Tencent QQMusic");
         CleanupPlayerState(_sodaMusicState, "SodaMusic");
+        CleanupPlayerState(_yandexMusicState, "Яндекс Музыка");
         _lastActiveState = null;
         _lastActiveInfoNull = true;
         steamManager.ClearStatus();
+    }
+
+    private static int? TryFindProcessId(params string[] processNames)
+    {
+        foreach (var name in processNames)
+        {
+            var processes = Process.GetProcessesByName(name);
+            try
+            {
+                if (processes.Length > 0)
+                {
+                    return processes[0].Id;
+                }
+            }
+            finally
+            {
+                foreach (var p in processes)
+                {
+                    p.Dispose();
+                }
+            }
+        }
+        return null;
     }
 
     private static void RecordPollSuccess(PlayerState state)
