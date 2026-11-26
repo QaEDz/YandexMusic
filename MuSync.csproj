@@ -10,7 +10,7 @@
         <RootNamespace>MuSync</RootNamespace>
 
 
-        <Version>0.3.0</Version>
+        <Version>0.4.0</Version>
         <Description>MuSync (форк от QaEDZ) — синхронизация статуса Яндекс Музыки, NetEase Music, QQ Music и Soda Music со Steam</Description>
 
 
