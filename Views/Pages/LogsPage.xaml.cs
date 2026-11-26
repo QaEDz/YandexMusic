@@ -88,7 +88,7 @@ public partial class LogsPage : Page
         while (_all.Count > MaxUiItems) _all.RemoveAt(0);
     }
 
-    private void UpdateCount() => CountText.Text = $"共 {_all.Count} 条";
+    private void UpdateCount() => CountText.Text = $"Записей: {_all.Count}";
 
     private void ScrollToEnd()
     {
@@ -100,7 +100,7 @@ public partial class LogsPage : Page
     private void PauseButton_Click(object sender, RoutedEventArgs e)
     {
         _paused = !_paused;
-        PauseButton.Content = _paused ? "继续" : "暂停";
+        PauseButton.Content = _paused ? "Продолжить" : "Пауза";
         PauseButton.Icon = new Wpf.Ui.Controls.SymbolIcon
         {
             Symbol = _paused ? Wpf.Ui.Controls.SymbolRegular.Play24 : Wpf.Ui.Controls.SymbolRegular.Pause24
@@ -127,14 +127,14 @@ public partial class LogsPage : Page
         try
         {
             Clipboard.SetText(sb.ToString());
-            CopyButton.Content = "已复制";
+            CopyButton.Content = "Скопировано";
             var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1.2) };
-            timer.Tick += (s, _) => { CopyButton.Content = "复制"; ((DispatcherTimer)s!).Stop(); };
+            timer.Tick += (s, _) => { CopyButton.Content = "Копировать"; ((DispatcherTimer)s!).Stop(); };
             timer.Start();
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"复制失败：{ex.Message}", "MuSync", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show($"Не удалось скопировать: {ex.Message}", "MuSync", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 
@@ -146,7 +146,7 @@ public partial class LogsPage : Page
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"打开日志目录失败：{ex.Message}\n{Logger.DirectoryPath}", "MuSync",
+            MessageBox.Show($"Не удалось открыть папку логов: {ex.Message}\n{Logger.DirectoryPath}", "MuSync",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }

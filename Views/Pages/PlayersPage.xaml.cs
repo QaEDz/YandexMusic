@@ -14,19 +14,19 @@ namespace MuSync;
 /// </summary>
 public partial class PlayersPage : Page
 {
-    private static readonly string[] PlayerNames = ["网易云音乐", "QQ音乐", "汽水音乐"];
+    private const int PlayerCount = 4;
     private readonly DispatcherTimer _updateTimer;
-    private readonly TextBlock[] _activeLabels = new TextBlock[3];
-    private readonly TextBlock[] _stateLabels = new TextBlock[3];
-    private readonly TextBlock[] _songLabels = new TextBlock[3];
-    private readonly TextBlock[] _artistLabels = new TextBlock[3];
-    private readonly TextBlock[] _albumLabels = new TextBlock[3];
-    private readonly TextBlock[] _progressLabels = new TextBlock[3];
+    private readonly TextBlock[] _activeLabels = new TextBlock[PlayerCount];
+    private readonly TextBlock[] _stateLabels = new TextBlock[PlayerCount];
+    private readonly TextBlock[] _songLabels = new TextBlock[PlayerCount];
+    private readonly TextBlock[] _artistLabels = new TextBlock[PlayerCount];
+    private readonly TextBlock[] _albumLabels = new TextBlock[PlayerCount];
+    private readonly TextBlock[] _progressLabels = new TextBlock[PlayerCount];
 
     public PlayersPage()
     {
         InitializeComponent();
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < PlayerCount; i++)
         {
             _activeLabels[i] = (TextBlock)FindName($"P{i}Active")!;
             _stateLabels[i] = (TextBlock)FindName($"P{i}State")!;
@@ -60,7 +60,8 @@ public partial class PlayersPage : Page
             var allPlayersStatus = AppServices.Rpc?.GetAllPlayersStatus();
             if (allPlayersStatus != null)
             {
-                for (var i = 0; i < 3; i++)
+                var count = Math.Min(PlayerCount, allPlayersStatus.Length);
+                for (var i = 0; i < count; i++)
                 {
                     var (playerInfo, _, isActive, lastError) = allPlayersStatus[i];
                     UpdatePlayer(i, playerInfo, isActive, lastError);
@@ -75,15 +76,15 @@ public partial class PlayersPage : Page
 
     private void UpdatePlayer(int index, PlayerInfo? playerInfo, bool isActive, RpcManager.ErrorCode lastError)
     {
-        _activeLabels[index].Text = isActive ? "运行中" : "未运行";
+        _activeLabels[index].Text = isActive ? "Запущен" : "Не запущен";
         SetForeground(_activeLabels[index],
             isActive ? "SystemFillColorSuccessBrush" : "TextFillColorSecondaryBrush");
         var stateText = lastError switch
         {
-            RpcManager.ErrorCode.PermissionDenied => "错误：需要管理员运行",
-            RpcManager.ErrorCode.DllNotFound => "错误：播放器组件未加载",
-            RpcManager.ErrorCode.VersionNotSupported => "错误：版本不支持/特征码失效",
-            _ => "无轮询错误"
+            RpcManager.ErrorCode.PermissionDenied => "Ошибка: нужны права администратора",
+            RpcManager.ErrorCode.DllNotFound => "Ошибка: компоненты плеера не загружены",
+            RpcManager.ErrorCode.VersionNotSupported => "Ошибка: версия плеера не поддерживается",
+            _ => "Без ошибок"
         };
         if (_stateLabels[index].Text != stateText) _stateLabels[index].Text = stateText;
         SetForeground(_stateLabels[index],
@@ -95,7 +96,7 @@ public partial class PlayersPage : Page
             _albumLabels[index].Text = string.IsNullOrEmpty(info.Album) ? "--" : info.Album;
             _progressLabels[index].Text = info.Duration > 0
                 ? $"{TimeSpan.FromSeconds(info.Schedule):mm\\:ss} / {TimeSpan.FromSeconds(info.Duration):mm\\:ss}" +
-                  (info.Pause ? "（已暂停）" : "")
+                  (info.Pause ? " (на паузе)" : "")
                 : "--";
         }
         else

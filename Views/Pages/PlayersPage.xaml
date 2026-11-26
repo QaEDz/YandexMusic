@@ -5,9 +5,9 @@
       Background="Transparent">
     <StackPanel MaxWidth="760" Margin="12,8,12,20">
 
-            <TextBlock Text="播放器" Style="{StaticResource SettingsSectionHeader}" />
+            <TextBlock Text="Плееры" Style="{StaticResource SettingsSectionHeader}" />
 
-            <!-- ============ 播放器 0：网易云音乐 ============ -->
+            <!-- ============ Плеер 0: NetEase Music ============ -->
             <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,10">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -18,14 +18,14 @@
                                    VerticalAlignment="Top" Margin="0,2,14,0" />
                     <StackPanel Grid.Column="1">
                         <Grid>
-                            <TextBlock Text="网易云音乐" Style="{StaticResource SettingsCardTitle}" FontWeight="SemiBold" />
-                            <TextBlock x:Name="P0Active" Text="未运行" HorizontalAlignment="Right" FontSize="12"
+                            <TextBlock Text="NetEase Music" Style="{StaticResource SettingsCardTitle}" FontWeight="SemiBold" />
+                            <TextBlock x:Name="P0Active" Text="Не запущен" HorizontalAlignment="Right" FontSize="12"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                         </Grid>
-                        <TextBlock x:Name="P0State" Style="{StaticResource SettingsCardDescription}" Margin="0,3,0,0" Text="无轮询错误" />
+                        <TextBlock x:Name="P0State" Style="{StaticResource SettingsCardDescription}" Margin="0,3,0,0" Text="Без ошибок" />
                         <Grid Margin="0,10,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="72" />
+                                <ColumnDefinition Width="96" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -34,18 +34,18 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Text="当前歌曲" FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <TextBlock Text="Трек" FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P0Song" Grid.Column="1" FontSize="12" Margin="8,0,0,0" TextTrimming="CharacterEllipsis"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
-                            <TextBlock Text="歌手" Grid.Row="1" FontSize="12" Margin="0,4,0,0"
+                            <TextBlock Text="Исполнитель" Grid.Row="1" FontSize="12" Margin="0,4,0,0"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P0Artist" Grid.Row="1" Grid.Column="1" FontSize="12" Margin="8,4,0,0" TextTrimming="CharacterEllipsis"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
-                            <TextBlock Text="专辑" Grid.Row="2" FontSize="12" Margin="0,4,0,0"
+                            <TextBlock Text="Альбом" Grid.Row="2" FontSize="12" Margin="0,4,0,0"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P0Album" Grid.Row="2" Grid.Column="1" FontSize="12" Margin="8,4,0,0" TextTrimming="CharacterEllipsis"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
-                            <TextBlock Text="进度" Grid.Row="3" FontSize="12" Margin="0,4,0,0"
+                            <TextBlock Text="Прогресс" Grid.Row="3" FontSize="12" Margin="0,4,0,0"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P0Progress" Grid.Row="3" Grid.Column="1" FontSize="12" Margin="8,4,0,0"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
@@ -54,7 +54,7 @@
                 </Grid>
             </Border>
 
-            <!-- ============ 播放器 1：QQ音乐 ============ -->
+            <!-- ============ Плеер 1: QQ Music ============ -->
             <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,10">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -65,14 +65,14 @@
                                    VerticalAlignment="Top" Margin="0,2,14,0" />
                     <StackPanel Grid.Column="1">
                         <Grid>
-                            <TextBlock Text="QQ音乐" Style="{StaticResource SettingsCardTitle}" FontWeight="SemiBold" />
-                            <TextBlock x:Name="P1Active" Text="未运行" HorizontalAlignment="Right" FontSize="12"
+                            <TextBlock Text="QQ Music" Style="{StaticResource SettingsCardTitle}" FontWeight="SemiBold" />
+                            <TextBlock x:Name="P1Active" Text="Не запущен" HorizontalAlignment="Right" FontSize="12"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                         </Grid>
-                        <TextBlock x:Name="P1State" Style="{StaticResource SettingsCardDescription}" Margin="0,3,0,0" Text="无轮询错误" />
+                        <TextBlock x:Name="P1State" Style="{StaticResource SettingsCardDescription}" Margin="0,3,0,0" Text="Без ошибок" />
                         <Grid Margin="0,10,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="72" />
+                                <ColumnDefinition Width="96" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -81,18 +81,18 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Text="当前歌曲" FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <TextBlock Text="Трек" FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P1Song" Grid.Column="1" FontSize="12" Margin="8,0,0,0" TextTrimming="CharacterEllipsis"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
-                            <TextBlock Text="歌手" Grid.Row="1" FontSize="12" Margin="0,4,0,0"
+                            <TextBlock Text="Исполнитель" Grid.Row="1" FontSize="12" Margin="0,4,0,0"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P1Artist" Grid.Row="1" Grid.Column="1" FontSize="12" Margin="8,4,0,0" TextTrimming="CharacterEllipsis"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
-                            <TextBlock Text="专辑" Grid.Row="2" FontSize="12" Margin="0,4,0,0"
+                            <TextBlock Text="Альбом" Grid.Row="2" FontSize="12" Margin="0,4,0,0"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P1Album" Grid.Row="2" Grid.Column="1" FontSize="12" Margin="8,4,0,0" TextTrimming="CharacterEllipsis"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
-                            <TextBlock Text="进度" Grid.Row="3" FontSize="12" Margin="0,4,0,0"
+                            <TextBlock Text="Прогресс" Grid.Row="3" FontSize="12" Margin="0,4,0,0"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P1Progress" Grid.Row="3" Grid.Column="1" FontSize="12" Margin="8,4,0,0"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
@@ -101,7 +101,7 @@
                 </Grid>
             </Border>
 
-            <!-- ============ 播放器 2：汽水音乐 ============ -->
+            <!-- ============ Плеер 2: Soda Music ============ -->
             <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,10">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -112,14 +112,14 @@
                                    VerticalAlignment="Top" Margin="0,2,14,0" />
                     <StackPanel Grid.Column="1">
                         <Grid>
-                            <TextBlock Text="汽水音乐" Style="{StaticResource SettingsCardTitle}" FontWeight="SemiBold" />
-                            <TextBlock x:Name="P2Active" Text="未运行" HorizontalAlignment="Right" FontSize="12"
+                            <TextBlock Text="Soda Music" Style="{StaticResource SettingsCardTitle}" FontWeight="SemiBold" />
+                            <TextBlock x:Name="P2Active" Text="Не запущен" HorizontalAlignment="Right" FontSize="12"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                         </Grid>
-                        <TextBlock x:Name="P2State" Style="{StaticResource SettingsCardDescription}" Margin="0,3,0,0" Text="无轮询错误" />
+                        <TextBlock x:Name="P2State" Style="{StaticResource SettingsCardDescription}" Margin="0,3,0,0" Text="Без ошибок" />
                         <Grid Margin="0,10,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="72" />
+                                <ColumnDefinition Width="96" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -128,20 +128,67 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Text="当前歌曲" FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <TextBlock Text="Трек" FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P2Song" Grid.Column="1" FontSize="12" Margin="8,0,0,0" TextTrimming="CharacterEllipsis"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
-                            <TextBlock Text="歌手" Grid.Row="1" FontSize="12" Margin="0,4,0,0"
+                            <TextBlock Text="Исполнитель" Grid.Row="1" FontSize="12" Margin="0,4,0,0"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P2Artist" Grid.Row="1" Grid.Column="1" FontSize="12" Margin="8,4,0,0" TextTrimming="CharacterEllipsis"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
-                            <TextBlock Text="专辑" Grid.Row="2" FontSize="12" Margin="0,4,0,0"
+                            <TextBlock Text="Альбом" Grid.Row="2" FontSize="12" Margin="0,4,0,0"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P2Album" Grid.Row="2" Grid.Column="1" FontSize="12" Margin="8,4,0,0" TextTrimming="CharacterEllipsis"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
-                            <TextBlock Text="进度" Grid.Row="3" FontSize="12" Margin="0,4,0,0"
+                            <TextBlock Text="Прогресс" Grid.Row="3" FontSize="12" Margin="0,4,0,0"
                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                             <TextBlock x:Name="P2Progress" Grid.Row="3" Grid.Column="1" FontSize="12" Margin="8,4,0,0"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ============ Плеер 3: Яндекс Музыка ============ -->
+            <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ui:SymbolIcon Symbol="MusicNote124" Style="{StaticResource SettingsCardIcon}"
+                                   VerticalAlignment="Top" Margin="0,2,14,0" />
+                    <StackPanel Grid.Column="1">
+                        <Grid>
+                            <TextBlock Text="Яндекс Музыка" Style="{StaticResource SettingsCardTitle}" FontWeight="SemiBold" />
+                            <TextBlock x:Name="P3Active" Text="Не запущен" HorizontalAlignment="Right" FontSize="12"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        </Grid>
+                        <TextBlock x:Name="P3State" Style="{StaticResource SettingsCardDescription}" Margin="0,3,0,0" Text="Без ошибок" />
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="96" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Трек" FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <TextBlock x:Name="P3Song" Grid.Column="1" FontSize="12" Margin="8,0,0,0" TextTrimming="CharacterEllipsis"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
+                            <TextBlock Text="Исполнитель" Grid.Row="1" FontSize="12" Margin="0,4,0,0"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <TextBlock x:Name="P3Artist" Grid.Row="1" Grid.Column="1" FontSize="12" Margin="8,4,0,0" TextTrimming="CharacterEllipsis"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
+                            <TextBlock Text="Альбом" Grid.Row="2" FontSize="12" Margin="0,4,0,0"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <TextBlock x:Name="P3Album" Grid.Row="2" Grid.Column="1" FontSize="12" Margin="8,4,0,0" TextTrimming="CharacterEllipsis"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
+                            <TextBlock Text="Прогресс" Grid.Row="3" FontSize="12" Margin="0,4,0,0"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <TextBlock x:Name="P3Progress" Grid.Row="3" Grid.Column="1" FontSize="12" Margin="8,4,0,0"
                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="--" />
                         </Grid>
                     </StackPanel>

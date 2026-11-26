@@ -52,7 +52,7 @@ public partial class GameIdlePage : Page
         var session = AppServices.Session;
         if (forceRefresh && (session == null || !session.IsLoggedOn))
         {
-            MessageBox.Show("需要先登录 Steam 才能读取库存。", "挂游戏时长",
+            MessageBox.Show("Чтобы загрузить библиотеку игр, сначала войдите в Steam.", "Фарм часов",
                 MessageBoxButton.OK, MessageBoxImage.Information);
             return;
         }
@@ -70,7 +70,7 @@ public partial class GameIdlePage : Page
         {
             if (forceRefresh || !auto)
             {
-                MessageBox.Show($"读取库存失败：{ex.Message}", "挂游戏时长",
+                MessageBox.Show($"Не удалось загрузить библиотеку: {ex.Message}", "Фарм часов",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
@@ -89,7 +89,7 @@ public partial class GameIdlePage : Page
             _allItems.Add(new GameListItem(game) { IsSelected = activeIds.Contains(game.AppId) });
         }
         ApplyFilter();
-        ProgressText.Text = $"共 {_allItems.Count} 个游戏";
+        ProgressText.Text = $"Всего игр: {_allItems.Count}";
         UpdateSelectionCount();
     }
 
@@ -119,7 +119,7 @@ public partial class GameIdlePage : Page
             _allItems.Count(x => x.IsSelected) > SteamSessionManager.MaxIdleGames)
         {
             item.IsSelected = false;
-            ProgressText.Text = $"最多同时挂 {SteamSessionManager.MaxIdleGames} 个游戏";
+            ProgressText.Text = $"Максимум {SteamSessionManager.MaxIdleGames} игр одновременно";
         }
         UpdateSelectionCount();
     }
@@ -129,14 +129,14 @@ public partial class GameIdlePage : Page
         var session = AppServices.Session;
         if (session == null || !session.IsLoggedOn)
         {
-            MessageBox.Show("Steam 未登录，无法开始挂时长。", "挂游戏时长",
+            MessageBox.Show("Сначала войдите в Steam, чтобы запустить фарм часов.", "Фарм часов",
                 MessageBoxButton.OK, MessageBoxImage.Information);
             return;
         }
         var selected = _allItems.Where(i => i.IsSelected).Select(i => i.AppId).ToList();
         if (selected.Count == 0)
         {
-            ProgressText.Text = "请先勾选至少一个游戏";
+            ProgressText.Text = "Выберите хотя бы одну игру";
             return;
         }
         StartButton.IsEnabled = false;
@@ -144,7 +144,7 @@ public partial class GameIdlePage : Page
         {
             await session.SetIdleGamesAsync(selected);
             _idleStartedUtc = DateTime.UtcNow;
-            ProgressText.Text = $"正在挂 {selected.Count} 个游戏";
+            ProgressText.Text = $"Активно игр: {selected.Count}";
         }
         finally
         {
@@ -180,13 +180,13 @@ public partial class GameIdlePage : Page
         if (isIdling)
         {
             var count = session?.IdleAppIds.Count ?? 0;
-            IdleStateText.Text = $"正在挂时长（{count} 个游戏）";
+            IdleStateText.Text = $"Идёт фарм часов (игр: {count})";
             if (_idleStartedUtc == null) _idleStartedUtc = DateTime.UtcNow;
             _elapsedTimer.Start();
         }
         else
         {
-            IdleStateText.Text = session?.IsLoggedOn == true ? "未开始" : "Steam 未登录";
+            IdleStateText.Text = session?.IsLoggedOn == true ? "Не запущено" : "Нет входа в Steam";
             _elapsedTimer.Stop();
             IdleElapsedText.Text = "";
         }
@@ -198,14 +198,14 @@ public partial class GameIdlePage : Page
     {
         if (_idleStartedUtc is { } start)
         {
-            IdleElapsedText.Text = $"本次已挂 {DateTime.UtcNow - start:hh\\:mm\\:ss}";
+            IdleElapsedText.Text = $"Сессия: {DateTime.UtcNow - start:hh\\:mm\\:ss}";
         }
     }
 
     private void UpdateSelectionCount()
     {
         var selected = _allItems.Count(x => x.IsSelected);
-        SelectionCountText.Text = $"已选 {selected}/{SteamSessionManager.MaxIdleGames}";
+        SelectionCountText.Text = $"Выбрано: {selected}/{SteamSessionManager.MaxIdleGames}";
     }
 
     private void SetLoading(bool loading)

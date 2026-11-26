@@ -5,19 +5,19 @@
       Background="Transparent">
     <DockPanel>
 
-        <!-- ==================== 顶部栏：标题居左，账户操作居右 ==================== -->
+        <!-- ==================== Верхняя панель ==================== -->
         <Grid DockPanel.Dock="Top" Margin="12,14,12,8">
-            <TextBlock Text="设置" Style="{StaticResource SettingsSectionHeader}" VerticalAlignment="Center" />
+            <TextBlock Text="Настройки" Style="{StaticResource SettingsSectionHeader}" VerticalAlignment="Center" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <ui:Button x:Name="LogoutButton" Content="退出登录" Margin="0,0,10,0" Click="LogoutButton_Click" />
-                <ui:Button x:Name="LoginButton" Content="重新登录" Click="LoginButton_Click" />
+                <ui:Button x:Name="LogoutButton" Content="Выйти из аккаунта" Margin="0,0,10,0" Click="LogoutButton_Click" />
+                <ui:Button x:Name="LoginButton" Content="Войти заново" Click="LoginButton_Click" />
             </StackPanel>
         </Grid>
 
         <StackPanel MaxWidth="760" Margin="12,0,12,20">
 
-            <!-- ==================== 程序设置 ==================== -->
-            <TextBlock Text="程序设置" Style="{StaticResource SettingsSectionHeader}" />
+            <!-- ==================== Основные настройки ==================== -->
+            <TextBlock Text="Основные" Style="{StaticResource SettingsSectionHeader}" />
             <StackPanel>
                 <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,4">
                     <Grid>
@@ -28,8 +28,8 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="Power24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="开机自启" Style="{StaticResource SettingsCardTitle}" />
-                            <TextBlock Text="随 Windows 登录自动启动 MuSync" Style="{StaticResource SettingsCardDescription}" />
+                            <TextBlock Text="Автозапуск с Windows" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="Запускать MuSync автоматически при входе в систему" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <ui:ToggleSwitch x:Name="AutoStartToggle" Grid.Column="2" VerticalAlignment="Center"
                                          Checked="Setting_Changed" Unchecked="Setting_Changed" />
@@ -44,8 +44,8 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="Desktop24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="关闭窗口时隐藏到托盘" Style="{StaticResource SettingsCardTitle}" />
-                            <TextBlock Text="点击关闭按钮时不退出，最小化到系统托盘" Style="{StaticResource SettingsCardDescription}" />
+                            <TextBlock Text="Сворачивать в трей при закрытии" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="Крестик не закрывает программу, а прячет её в область уведомлений" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <ui:ToggleSwitch x:Name="CloseToTrayToggle" Grid.Column="2" VerticalAlignment="Center"
                                          Checked="Setting_Changed" Unchecked="Setting_Changed" />
@@ -60,8 +60,8 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="Desktop24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="启动时隐藏到托盘" Style="{StaticResource SettingsCardTitle}" />
-                            <TextBlock Text="程序启动后不显示主窗口，仅驻留托盘" Style="{StaticResource SettingsCardDescription}" />
+                            <TextBlock Text="Запускать свёрнутым в трей" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="При старте не показывать главное окно, а сразу работать в фоне" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <ui:ToggleSwitch x:Name="StartInTrayToggle" Grid.Column="2" VerticalAlignment="Center"
                                          Checked="Setting_Changed" Unchecked="Setting_Changed" />
@@ -69,8 +69,8 @@
                 </Border>
             </StackPanel>
 
-            <!-- ==================== Steam 显示设置 ==================== -->
-            <TextBlock Text="Steam 显示设置" Style="{StaticResource SettingsSectionHeader}" />
+            <!-- ==================== Отображение в Steam ==================== -->
+            <TextBlock Text="Отображение в Steam" Style="{StaticResource SettingsSectionHeader}" />
             <StackPanel>
                 <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,4">
                     <Grid>
@@ -81,8 +81,8 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="Chat24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="启用 Steam 同步" Style="{StaticResource SettingsCardTitle}" />
-                            <TextBlock Text="把正在播放的歌曲推送到 Steam 好友状态" Style="{StaticResource SettingsCardDescription}" />
+                            <TextBlock Text="Синхронизация со Steam" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="Отправлять текущий трек в ваш игровой статус Steam" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <ui:ToggleSwitch x:Name="EnableSteamSyncToggle" Grid.Column="2" VerticalAlignment="Center"
                                          Checked="Setting_Changed" Unchecked="Setting_Changed" />
@@ -97,12 +97,12 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="PaintBrush24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="自定义前缀" Style="{StaticResource SettingsCardTitle}" />
-                            <TextBlock Text="在歌曲信息前追加固定文字" Style="{StaticResource SettingsCardDescription}" />
+                            <TextBlock Text="Свой префикс" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="Добавлять произвольный текст перед названием трека" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                             <ui:TextBox x:Name="CustomPrefixTextBox" Width="180" Margin="0,0,12,0"
-                                        PlaceholderText="例如：正在听：" IsEnabled="False"
+                                        PlaceholderText="Например: Слушаю: " IsEnabled="False"
                                         TextChanged="TextBox_Changed" />
                             <ui:ToggleSwitch x:Name="EnableCustomPrefixToggle" VerticalAlignment="Center"
                                              Checked="Setting_Changed" Unchecked="Setting_Changed" />
@@ -118,12 +118,12 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="Chat24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="空闲/暂停时显示签名" Style="{StaticResource SettingsCardTitle}" />
-                            <TextBlock Text="未播放或暂停时，Steam 状态位显示自定义签名" Style="{StaticResource SettingsCardDescription}" />
+                            <TextBlock Text="Подпись в простое и на паузе" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="Когда музыка не играет, показывать свой текст в статусе Steam" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                             <ui:TextBox x:Name="CustomSignatureTextBox" Width="180" Margin="0,0,12,0"
-                                        PlaceholderText="例如：摸鱼中，勿扰" IsEnabled="False"
+                                        PlaceholderText="Например: Отдыхаю" IsEnabled="False"
                                         TextChanged="TextBox_Changed" />
                             <ui:ToggleSwitch x:Name="EnableCustomSignatureToggle" VerticalAlignment="Center"
                                              Checked="Setting_Changed" Unchecked="Setting_Changed" />
@@ -139,8 +139,8 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="Cursor24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="推送实时操作" Style="{StaticResource SettingsCardTitle}" />
-                            <TextBlock Text="未播放音乐时，把鼠标当前操作的应用名同步到 Steam 状态" Style="{StaticResource SettingsCardDescription}" />
+                            <TextBlock Text="Показывать активное приложение" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="Пока музыка не играет, передавать в Steam название открытой программы" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <ui:ToggleSwitch x:Name="PushRealtimeActivityToggle" Grid.Column="2" VerticalAlignment="Center"
                                          Checked="Setting_Changed" Unchecked="Setting_Changed" />
@@ -155,8 +155,8 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="Person24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="显示歌手名称" Style="{StaticResource SettingsCardTitle}" />
-                            <TextBlock Text="歌曲名后附带歌手名" Style="{StaticResource SettingsCardDescription}" />
+                            <TextBlock Text="Показывать исполнителя" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="Добавлять имя артиста после названия трека" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <ui:ToggleSwitch x:Name="ShowArtistNameToggle" Grid.Column="2" VerticalAlignment="Center"
                                          Checked="Setting_Changed" Unchecked="Setting_Changed" />
@@ -171,7 +171,7 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="Play24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="显示进度条" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="Показывать полосу прогресса" Style="{StaticResource SettingsCardTitle}" />
                             <TextBlock Text="▰▰▰▱▱▱ 2:30/4:15" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <ui:ToggleSwitch x:Name="ShowProgressBarToggle" Grid.Column="2" VerticalAlignment="Center"
@@ -187,13 +187,13 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="Info24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="字数过多时优先显示" Style="{StaticResource SettingsCardTitle}" />
-                            <TextBlock Text="Steam 状态文本超长时保留哪部分" Style="{StaticResource SettingsCardDescription}" />
+                            <TextBlock Text="Приоритет при нехватке места" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="Что оставить, если строка статуса превышает лимит Steam" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                            <RadioButton x:Name="PriorityArtistRadio" Content="歌手名称" Margin="0,0,12,0" GroupName="StatusPriority"
+                            <RadioButton x:Name="PriorityArtistRadio" Content="Исполнитель" Margin="0,0,12,0" GroupName="StatusPriority"
                                          Checked="Setting_Changed" />
-                            <RadioButton x:Name="PriorityProgressRadio" Content="进度条" GroupName="StatusPriority"
+                            <RadioButton x:Name="PriorityProgressRadio" Content="Прогресс" GroupName="StatusPriority"
                                          Checked="Setting_Changed" />
                         </StackPanel>
                     </Grid>
@@ -207,8 +207,8 @@
                         </Grid.ColumnDefinitions>
                         <ui:SymbolIcon Symbol="Pause24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="玩游戏时自动暂停同步" Style="{StaticResource SettingsCardTitle}" />
-                            <TextBlock Text="正在玩真实 Steam 游戏时，暂停音乐状态推送" Style="{StaticResource SettingsCardDescription}" />
+                            <TextBlock Text="Пауза синхронизации во время игры" Style="{StaticResource SettingsCardTitle}" />
+                            <TextBlock Text="Автоматически скрывать статус музыки, когда запущена игра в Steam" Style="{StaticResource SettingsCardDescription}" />
                         </StackPanel>
                         <ui:ToggleSwitch x:Name="PauseWhenPlayingGameToggle" Grid.Column="2" VerticalAlignment="Center"
                                          Checked="Setting_Changed" Unchecked="Setting_Changed" />

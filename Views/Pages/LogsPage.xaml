@@ -18,35 +18,35 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <ui:SymbolIcon Symbol="History24" FontSize="18" Margin="0,0,8,0"
                                Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                <TextBlock Text="运行日志" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" />
+                <TextBlock Text="Журнал работы" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" />
                 <TextBlock x:Name="CountText" Text="" FontSize="12" Margin="12,0,0,2"
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <ComboBox x:Name="LevelFilter" Width="110" SelectedIndex="0" Margin="0,0,8,0">
-                    <ComboBoxItem Content="全部" />
-                    <ComboBoxItem Content="Info" />
-                    <ComboBoxItem Content="警告" />
-                    <ComboBoxItem Content="错误" />
+                <ComboBox x:Name="LevelFilter" Width="120" SelectedIndex="0" Margin="0,0,8,0">
+                    <ComboBoxItem Content="Все" />
+                    <ComboBoxItem Content="Инфо" />
+                    <ComboBoxItem Content="Предупреждения" />
+                    <ComboBoxItem Content="Ошибки" />
                 </ComboBox>
-                <ui:Button x:Name="PauseButton" Content="暂停" Appearance="Secondary"
+                <ui:Button x:Name="PauseButton" Content="Пауза" Appearance="Secondary"
                            Icon="{ui:SymbolIcon Pause24}" Margin="0,0,8,0" Click="PauseButton_Click" />
-                <ui:Button x:Name="AutoScrollButton" Content="自动滚动" Appearance="Secondary"
+                <ui:Button x:Name="AutoScrollButton" Content="Автопрокрутка" Appearance="Secondary"
                            Icon="{ui:SymbolIcon ArrowCircleDown24}" Margin="0,0,8,0"
                            Click="AutoScrollButton_Click" />
-                <ui:Button x:Name="CopyButton" Content="复制" Appearance="Secondary"
+                <ui:Button x:Name="CopyButton" Content="Копировать" Appearance="Secondary"
                            Icon="{ui:SymbolIcon Copy24}" Margin="0,0,8,0" Click="CopyButton_Click" />
-                <ui:Button Content="清空" Appearance="Secondary"
+                <ui:Button Content="Очистить" Appearance="Secondary"
                            Icon="{ui:SymbolIcon Delete24}" Margin="0,0,8,0" Click="ClearButton_Click" />
                 <ui:Button Appearance="Secondary" Icon="{ui:SymbolIcon FolderOpen24}"
-                           ToolTip="打开日志文件目录" Click="OpenFolderButton_Click" />
+                           ToolTip="Открыть папку с логами" Click="OpenFolderButton_Click" />
             </StackPanel>
         </Grid>
 
         <TextBlock Grid.Row="1" Margin="2,6,0,8" FontSize="12"
                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                   Text="实时显示最近 1000 条内存日志（同时写入 %LocalAppData%\MuSync\logs\）；黑色/白色背景便于调试" />
+                   Text="Последние 1000 записей в реальном времени (файлы логов также сохраняются в %LocalAppData%\MuSync\logs\)" />
 
         <Border Grid.Row="2" CornerRadius="8" BorderThickness="1"
                 Background="#FF1E1E1E" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}">

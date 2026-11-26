@@ -39,7 +39,7 @@ public partial class SteamLoginWindow : FluentWindow
         }
         _isLoginInProgress = true;
         UpdateUiState();
-        SetStatus("正在自动登录...", info: true);
+        SetStatus("Выполняется автовход...", info: true);
         var success = await Task.Run(() => _session.LoginWithTokenAsync(savedUser, savedToken));
         if (success)
         {
@@ -48,7 +48,7 @@ public partial class SteamLoginWindow : FluentWindow
         }
         else
         {
-            SetStatus("自动登录失败，请手动登录。", info: false);
+            SetStatus("Автовход не сработал — войдите вручную.", info: false);
             _isLoginInProgress = false;
             UpdateUiState();
         }
@@ -66,12 +66,12 @@ public partial class SteamLoginWindow : FluentWindow
         var pass = PasswordBox.Password.Trim();
         if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
         {
-            SetStatus("请输入账号和密码", info: false);
+            SetStatus("Введите логин и пароль Steam", info: false);
             return;
         }
         _isLoginInProgress = true;
         UpdateUiState();
-        SetStatus("正在登录...", info: true);
+        SetStatus("Выполняется вход...", info: true);
         // 勾选"记住我"才保存令牌用于下次自动登录
         _session.RememberSession = RememberCheckBox.IsChecked == true;
         _session.OnSteamGuardRequired += OnSteamGuardRequired;
@@ -84,7 +84,7 @@ public partial class SteamLoginWindow : FluentWindow
         }
         else
         {
-            SetStatus(_session.LoginError ?? "登录失败", info: false);
+            SetStatus(_session.LoginError ?? "Не удалось войти", info: false);
             _isLoginInProgress = false;
             UpdateUiState();
         }
@@ -97,20 +97,20 @@ public partial class SteamLoginWindow : FluentWindow
         {
             if (isMobile)
             {
-                SetStatus("Steam Guard：请在手机 App 上确认登录！", info: true);
+                SetStatus("Steam Guard: подтвердите вход в мобильном приложении!", info: true);
             }
             else
             {
-                var code = SteamGuardCodeWindow.Prompt(this, "请输入邮箱验证码:");
+                var code = SteamGuardCodeWindow.Prompt(this, "Введите код подтверждения из письма:");
                 if (!string.IsNullOrEmpty(code))
                 {
                     _session.SubmitSteamGuardCode(code);
-                    SetStatus("正在验证...", info: true);
+                    SetStatus("Проверяем код...", info: true);
                 }
                 else
                 {
                     _session.SubmitSteamGuardCode("");
-                    SetStatus("已取消。", info: false);
+                    SetStatus("Вход отменён.", info: false);
                 }
             }
         });
@@ -129,7 +129,7 @@ public partial class SteamLoginWindow : FluentWindow
         PasswordBox.IsEnabled = !_isLoginInProgress;
         RememberCheckBox.IsEnabled = !_isLoginInProgress;
         LoginButton.IsEnabled = !_isLoginInProgress;
-        LoginButton.Content = _isLoginInProgress ? "..." : "登录";
+        LoginButton.Content = _isLoginInProgress ? "..." : "Войти";
         Cursor = _isLoginInProgress ? System.Windows.Input.Cursors.Wait : System.Windows.Input.Cursors.Arrow;
     }
 
@@ -137,8 +137,8 @@ public partial class SteamLoginWindow : FluentWindow
     public static void ShowNotLoggedInHint()
     {
         MessageBox.Show(
-            "未登录 Steam，音乐状态将不会同步到好友列表。\n\n" +
-            "你可以在设置中重新登录。",
-            "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            "Вы не вошли в Steam — статус музыки пока не будет виден друзьям.\n\n" +
+            "Войти можно в любой момент в разделе «Настройки».",
+            "Подсказка", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 }

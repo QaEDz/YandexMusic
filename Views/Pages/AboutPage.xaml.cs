@@ -47,11 +47,11 @@ public partial class AboutPage : Page
         var version = string.IsNullOrWhiteSpace(informational)
             ? Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "0.0.0"
             : informational.Split('+', '-')[0];
-        VersionText.Text = $"版本 {version}";
+        VersionText.Text = $"Версия {version}";
 
         var framework = RuntimeInformation.FrameworkDescription;
         var os = RuntimeInformation.OSDescription;
-        RuntimeText.Text = $"运行环境：{framework} · {os} · x64";
+        RuntimeText.Text = $"Среда выполнения: {framework} · {os} · x64";
     }
 
     private void Link_RequestNavigate(object sender, RequestNavigateEventArgs e)

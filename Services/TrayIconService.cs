@@ -20,7 +20,7 @@ internal static class TrayIconService
         _mainWindow = mainWindow;
         // 菜单顶部状态行（禁用态，由 UpdateTrayStatus 节流刷新）
         _trayStatusItem = new WinForms.ToolStripMenuItem("MuSync") { Enabled = false };
-        _pauseSyncItem = new WinForms.ToolStripMenuItem("暂停同步") { CheckOnClick = true };
+        _pauseSyncItem = new WinForms.ToolStripMenuItem("Приостановить синхронизацию") { CheckOnClick = true };
         _pauseSyncItem.Click += (_, _) =>
         {
             var steamManager = AppServices.Steam;
@@ -33,9 +33,9 @@ internal static class TrayIconService
                 AppServices.Rpc?.RequestStateRefresh();
             }
         };
-        var showSettingsItem = new WinForms.ToolStripMenuItem("显示设置");
-        var showMainWindowItem = new WinForms.ToolStripMenuItem("显示主窗口");
-        var exitMenuItem = new WinForms.ToolStripMenuItem("退出");
+        var showSettingsItem = new WinForms.ToolStripMenuItem("Настройки");
+        var showMainWindowItem = new WinForms.ToolStripMenuItem("Открыть окно");
+        var exitMenuItem = new WinForms.ToolStripMenuItem("Выход");
         var contextMenu = new WinForms.ContextMenuStrip();
         contextMenu.Items.AddRange(
             _trayStatusItem, new WinForms.ToolStripSeparator(),
@@ -78,18 +78,18 @@ internal static class TrayIconService
             if (config.EnableSteamSync && config.PauseWhenPlayingGame &&
                 AppServices.Steam?.IsRealGameActive == true)
             {
-                text = "游戏中，音乐同步已暂停";
+                text = "В игре — синхронизация на паузе";
             }
             else if (AppServices.Steam?.ManualPause == true)
             {
-                text = "同步已手动暂停";
+                text = "Синхронизация на паузе";
             }
             else
             {
                 var current = AppServices.Rpc?.GetCurrentPlayerInfo();
                 text = current?.PlayerInfo is { } song
-                    ? $"正在播放 {current.Value.PlayerName}: {song.Title}"
-                    : "未在播放音乐";
+                    ? $"Играет ({current.Value.PlayerName}): {song.Title}"
+                    : "Ничего не играет";
             }
             text = StringUtils.GetTruncatedStringByMaxByteLength(text, 60);
             _trayIcon.Text = text;
@@ -106,7 +106,7 @@ internal static class TrayIconService
     }
     public static void ShowMinimizeToTrayNotification()
     {
-        _trayIcon?.ShowBalloonTip(1000, "应用仍在运行", "MuSync 已最小化到托盘区域。", WinForms.ToolTipIcon.Info);
+        _trayIcon?.ShowBalloonTip(1000, "MuSync работает в фоне", "Приложение свёрнуто в трей.", WinForms.ToolTipIcon.Info);
     }
     public static void Dispose()
     {

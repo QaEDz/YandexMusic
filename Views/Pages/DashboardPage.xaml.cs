@@ -14,11 +14,13 @@ namespace MuSync;
 /// </summary>
 public partial class DashboardPage : Page
 {
+    private const int PlayerCount = 4;
     private static readonly SolidColorBrush NetEaseBrush = Freeze(Color.FromRgb(241, 98, 70));
     private static readonly SolidColorBrush TencentBrush = Freeze(Color.FromRgb(217, 215, 23));
     private static readonly SolidColorBrush SodaBrush = Freeze(Color.FromRgb(254, 44, 85));
-    private static readonly SolidColorBrush[] PlayerBrushes = [NetEaseBrush, TencentBrush, SodaBrush];
-    private static readonly string[] PlayerNames = ["网易云音乐", "QQ音乐", "汽水音乐"];
+    private static readonly SolidColorBrush YandexBrush = Freeze(Color.FromRgb(255, 204, 0));
+    private static readonly SolidColorBrush[] PlayerBrushes = [NetEaseBrush, TencentBrush, SodaBrush, YandexBrush];
+    private static readonly string[] PlayerNames = ["NetEase Music", "QQ Music", "Soda Music", "Яндекс Музыка"];
 
     private static SolidColorBrush Freeze(Color color)
     {
@@ -29,25 +31,25 @@ public partial class DashboardPage : Page
 
     private readonly DispatcherTimer _updateTimer;
     private readonly DispatcherTimer _perfTimer;
-    private readonly TextBlock[] _playerNameLabels = new TextBlock[3];
-    private readonly Border[] _coverBorders = new Border[3];
-    private readonly UIElement[] _coverPlaceholders = new UIElement[3];
-    private readonly TextBlock[] _songTitleLabels = new TextBlock[3];
-    private readonly TextBlock[] _artistLabels = new TextBlock[3];
-    private readonly TextBlock[] _albumLabels = new TextBlock[3];
-    private readonly TextBlock[] _statusLabels = new TextBlock[3];
-    private readonly ProgressBar[] _progressBars = new ProgressBar[3];
-    private readonly TextBlock[] _progressLabels = new TextBlock[3];
-    private readonly string[] _currentSongIds = new string[3];
-    private readonly string[] _currentCoverUrls = ["", "", ""];
-    private readonly string[] _currentCacheKeys = ["", "", ""];
-    private readonly PlayerInfo?[] _lastPlayerInfos = new PlayerInfo?[3];
-    private readonly bool[] _lastActiveStates = new bool[3];
+    private readonly TextBlock[] _playerNameLabels = new TextBlock[PlayerCount];
+    private readonly Border[] _coverBorders = new Border[PlayerCount];
+    private readonly UIElement[] _coverPlaceholders = new UIElement[PlayerCount];
+    private readonly TextBlock[] _songTitleLabels = new TextBlock[PlayerCount];
+    private readonly TextBlock[] _artistLabels = new TextBlock[PlayerCount];
+    private readonly TextBlock[] _albumLabels = new TextBlock[PlayerCount];
+    private readonly TextBlock[] _statusLabels = new TextBlock[PlayerCount];
+    private readonly ProgressBar[] _progressBars = new ProgressBar[PlayerCount];
+    private readonly TextBlock[] _progressLabels = new TextBlock[PlayerCount];
+    private readonly string[] _currentSongIds = new string[PlayerCount];
+    private readonly string[] _currentCoverUrls = ["", "", "", ""];
+    private readonly string[] _currentCacheKeys = ["", "", "", ""];
+    private readonly PlayerInfo?[] _lastPlayerInfos = new PlayerInfo?[PlayerCount];
+    private readonly bool[] _lastActiveStates = new bool[PlayerCount];
 
     public DashboardPage()
     {
         InitializeComponent();
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < PlayerCount; i++)
         {
             _playerNameLabels[i] = (TextBlock)FindName($"PlayerName{i}")!;
             _coverBorders[i] = (Border)FindName($"CoverBorder{i}")!;
@@ -90,14 +92,14 @@ public partial class DashboardPage : Page
             var memoryInfo = PerformanceMonitor.GetMemoryInfo();
             var cacheStats = PerformanceMonitor.GetCacheStatistics();
             MemoryInfoText.Text =
-                $"工作集: {memoryInfo.GetFormattedWorkingSet()}, 私有: {memoryInfo.GetFormattedPrivateMemory()}, 虚拟: {memoryInfo.GetFormattedVirtualMemory()}\n" +
-                $"GC托管: {memoryInfo.GetFormattedGcMemory()}\n" +
-                $"图片缓存: {cacheStats.ImageCacheCount} 项 | 模块缓存: {cacheStats.ModuleCacheCount + cacheStats.ProcessModuleCacheCount} 项\n" +
-                $"更新于: {memoryInfo.Timestamp:HH:mm:ss}";
+                $"ОЗУ (рабочий набор): {memoryInfo.GetFormattedWorkingSet()}, приватная: {memoryInfo.GetFormattedPrivateMemory()}, виртуальная: {memoryInfo.GetFormattedVirtualMemory()}\n" +
+                $"Управляемая память GC: {memoryInfo.GetFormattedGcMemory()}\n" +
+                $"Кэш обложек: {cacheStats.ImageCacheCount} | Кэш модулей: {cacheStats.ModuleCacheCount + cacheStats.ProcessModuleCacheCount}\n" +
+                $"Обновлено: {memoryInfo.Timestamp:HH:mm:ss}";
         }
         catch (Exception ex)
         {
-            MemoryInfoText.Text = $"获取内存信息失败: {ex.Message}";
+            MemoryInfoText.Text = $"Не удалось получить данные о памяти: {ex.Message}";
         }
     }
 
@@ -113,20 +115,21 @@ public partial class DashboardPage : Page
             var rpcManager = AppServices.Rpc;
             if (rpcManager == null) return;
             var allPlayersStatus = rpcManager.GetAllPlayersStatus();
-            for (var i = 0; i < 3; i++)
+            var count = Math.Min(PlayerCount, allPlayersStatus.Length);
+            for (var i = 0; i < count; i++)
             {
                 var (playerInfo, playerName, isActive, lastError) = allPlayersStatus[i];
                 UpdatePlayerDisplay(i, playerInfo, playerName, isActive, forceRefresh, lastError);
             }
             ImageCacheManager.SetActiveKeys(_currentCacheKeys.Where(k => !string.IsNullOrEmpty(k)));
-            LastUpdateLabel.Text = $"最后更新: {DateTime.Now:HH:mm:ss}";
+            LastUpdateLabel.Text = $"Обновлено: {DateTime.Now:HH:mm:ss}";
             UpdateSteamStateLabel();
             UpdateSteamSession();
             UpdateLivePreview(allPlayersStatus);
         }
         catch (Exception ex)
         {
-            LastUpdateLabel.Text = $"更新失败: {ex.Message}";
+            LastUpdateLabel.Text = $"Ошибка обновления: {ex.Message}";
         }
     }
 
@@ -138,27 +141,27 @@ public partial class DashboardPage : Page
         string? brushKey;
         if (!config.EnableSteamSync)
         {
-            text = "Steam 同步未启用";
+            text = "Синхронизация со Steam отключена";
             brushKey = "TextFillColorSecondaryBrush";
         }
         else if (session == null)
         {
-            text = "Steam 服务未初始化";
+            text = "Сервис Steam не запущен";
             brushKey = "SystemFillColorCriticalBrush";
         }
         else if (!session.IsLoggedOn)
         {
-            text = session.IsConnected ? "Steam 未登录" : "正在连接 Steam...";
+            text = session.IsConnected ? "Нет входа в Steam" : "Подключение к Steam...";
             brushKey = session.IsConnected ? "SystemFillColorCautionBrush" : "TextFillColorSecondaryBrush";
         }
         else if (config.PauseWhenPlayingGame && AppServices.Steam?.IsRealGameActive == true)
         {
-            text = "正在玩真实游戏，音乐同步已暂停";
+            text = "Идёт игра — музыка на паузе";
             brushKey = "SystemFillColorCautionBrush";
         }
         else
         {
-            text = "Steam 已登录，同步中";
+            text = "Steam подключён, синхронизация активна";
             brushKey = "SystemFillColorSuccessBrush";
         }
         if (SteamStateLabel.Text != text)
@@ -174,16 +177,16 @@ public partial class DashboardPage : Page
         var session = AppServices.Session;
         if (session == null)
         {
-            SConn.Text = "服务未初始化";
+            SConn.Text = "Сервис не инициализирован";
             SLogon.Text = "--";
             SRealGame.Text = "--";
             SManualPause.Text = "--";
             return;
         }
-        SConn.Text = session.IsConnected ? "已连接" : "未连接";
-        SLogon.Text = session.IsLoggedOn ? $"已登录（{session.Username ?? "未知账号"}）" : "未登录";
-        SRealGame.Text = session.IsRealGameActive ? "检测到，音乐同步暂停" : "无";
-        SManualPause.Text = AppServices.Steam?.ManualPause == true ? "已暂停（托盘菜单可恢复）" : "否";
+        SConn.Text = session.IsConnected ? "Подключено" : "Нет подключения";
+        SLogon.Text = session.IsLoggedOn ? $"Выполнен вход ({session.Username ?? "неизвестный аккаунт"})" : "Не выполнен";
+        SRealGame.Text = session.IsRealGameActive ? "Запущена — музыка на паузе" : "Нет";
+        SManualPause.Text = AppServices.Steam?.ManualPause == true ? "Включена (снимается в трее)" : "Нет";
     }
 
     /// <summary>
@@ -196,19 +199,19 @@ public partial class DashboardPage : Page
         string preview;
         if (!config.EnableSteamSync)
         {
-            preview = "Steam 同步未启用";
+            preview = "Синхронизация со Steam отключена";
         }
         else if (AppServices.Session is not { IsLoggedOn: true })
         {
-            preview = "未登录 Steam（好友看不到状态）";
+            preview = "Вы не вошли в Steam (друзья не видят статус)";
         }
         else if (AppServices.Steam?.ManualPause == true)
         {
-            preview = "已手动暂停同步";
+            preview = "Синхронизация приостановлена вручную";
         }
         else if (config.PauseWhenPlayingGame && AppServices.Steam?.IsRealGameActive == true)
         {
-            preview = "正在玩真实 Steam 游戏，音乐状态已让位";
+            preview = "Запущена игра в Steam — статус музыки временно скрыт";
         }
         else
         {
@@ -229,12 +232,12 @@ public partial class DashboardPage : Page
             {
                 var appName = Win32Api.User32.GetForegroundAppName();
                 preview = string.IsNullOrEmpty(appName)
-                    ? (SteamStatusManager.GetIdleSignature(config) ?? "空闲中（无签名，好友看不到状态）")
-                    : $"正在使用 {appName.Trim()}";
+                    ? (SteamStatusManager.GetIdleSignature(config) ?? "Простой (подпись не задана, статус скрыт)")
+                    : $"Сейчас в {appName.Trim()}";
             }
             else
             {
-                preview = SteamStatusManager.GetIdleSignature(config) ?? "空闲中（无签名，好友看不到状态）";
+                preview = SteamStatusManager.GetIdleSignature(config) ?? "Простой (подпись не задана, статус скрыт)";
             }
         }
         if (PreviewText.Text != preview) PreviewText.Text = preview;
@@ -266,7 +269,7 @@ public partial class DashboardPage : Page
         {
             const string zeroWidthSpace = "\u200B";
             var title = string.IsNullOrEmpty(playerInfo.Value.Title)
-                ? StringUtils.GetTruncatedStringByMaxByteLength("未知歌曲", 128)
+                ? StringUtils.GetTruncatedStringByMaxByteLength("Без названия", 128)
                 : StringUtils.GetTruncatedStringByMaxByteLength(playerInfo.Value.Title + zeroWidthSpace, 128);
             var artists = string.IsNullOrEmpty(playerInfo.Value.Artists)
                 ? ""
@@ -285,7 +288,7 @@ public partial class DashboardPage : Page
             if (_artistLabels[index].Text != artistText) _artistLabels[index].Text = artistText;
             var albumText = string.IsNullOrEmpty(album) ? "" : $"💿 {album}";
             if (_albumLabels[index].Text != albumText) _albumLabels[index].Text = albumText;
-            var statusText = playerInfo.Value.Pause ? "⏸️ 已暂停" : "▶️ 正在播放";
+            var statusText = playerInfo.Value.Pause ? "⏸️ На паузе" : "▶️ Играет";
             var statusBrushKey = playerInfo.Value.Pause ? "SystemFillColorCautionBrush" : "SystemFillColorSuccessBrush";
             if (_statusLabels[index].Text != statusText)
             {
@@ -334,7 +337,7 @@ public partial class DashboardPage : Page
         }
         else
         {
-            var defaultTitle = StringUtils.GetTruncatedStringByMaxByteLength("播放器未运行", 128);
+            var defaultTitle = StringUtils.GetTruncatedStringByMaxByteLength("Плеер не запущен", 128);
             if (_songTitleLabels[index].Text != defaultTitle) _songTitleLabels[index].Text = defaultTitle;
             if (_artistLabels[index].Text != "") _artistLabels[index].Text = "";
             if (_albumLabels[index].Text != "") _albumLabels[index].Text = "";
@@ -342,16 +345,16 @@ public partial class DashboardPage : Page
             switch (lastError)
             {
                 case RpcManager.ErrorCode.PermissionDenied:
-                    statusText = "⚠️ 需要管理员运行";
+                    statusText = "⚠️ Нужны права администратора";
                     break;
                 case RpcManager.ErrorCode.DllNotFound:
-                    statusText = "⚠️ 播放器组件未加载";
+                    statusText = "⚠️ Компоненты плеера не загружены";
                     break;
                 case RpcManager.ErrorCode.VersionNotSupported:
-                    statusText = "⚠️ 版本不支持/特征码失效";
+                    statusText = "⚠️ Версия не поддерживается";
                     break;
                 default:
-                    statusText = "未运行";
+                    statusText = "Не запущен";
                     break;
             }
             if (_statusLabels[index].Text != statusText)

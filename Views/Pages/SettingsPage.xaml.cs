@@ -75,8 +75,8 @@ public partial class SettingsPage : Page
         if (!success)
         {
             MessageBox.Show(
-                $"无法 {(isAutoStartChecked ? "设置" : "取消")} 开机自启。\n请尝试以管理员权限运行本程序一次。",
-                "操作失败", MessageBoxButton.OK, MessageBoxImage.Warning);
+                $"Не удалось {(isAutoStartChecked ? "включить" : "отключить")} автозапуск.\nПопробуйте один раз запустить MuSync от имени администратора.",
+                "Не удалось выполнить", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 
@@ -99,8 +99,8 @@ public partial class SettingsPage : Page
     private void LogoutButton_Click(object sender, RoutedEventArgs e)
     {
         var result = MessageBox.Show(
-            "确定要退出登录吗？\n退出后需要重新打开程序并输入 Steam 账号密码。",
-            "退出登录", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            "Точно выйти из аккаунта Steam?\nПосле выхода приложение закроется, и при следующем запуске нужно будет войти снова.",
+            "Выход из аккаунта", MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (result != MessageBoxResult.Yes) return;
         var settings = Configurations.Instance.Settings;
         settings.SteamUsername = "";
@@ -118,7 +118,7 @@ public partial class SettingsPage : Page
         var loginWindow = new SteamLoginWindow(session) { Owner = Window.GetWindow(this) };
         loginWindow.ShowDialog();
         if (!loginWindow.LoginSucceeded) return;
-        MessageBox.Show("Steam 登录成功，音乐状态已恢复同步。", "提示",
+        MessageBox.Show("Вход в Steam выполнен — синхронизация музыки возобновлена.", "Готово",
             MessageBoxButton.OK, MessageBoxImage.Information);
         AppServices.Rpc?.RequestStateRefresh();
     }

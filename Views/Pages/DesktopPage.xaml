@@ -5,9 +5,9 @@
       Background="Transparent">
     <StackPanel MaxWidth="760" Margin="12,8,12,20">
 
-        <TextBlock Text="桌面" Style="{StaticResource SettingsSectionHeader}" Margin="0,8,0,0" />
+        <TextBlock Text="Рабочий стол" Style="{StaticResource SettingsSectionHeader}" Margin="0,8,0,0" />
 
-        <!-- ============ 双击隐藏图标 ============ -->
+        <!-- ============ Скрытие значков двойным кликом ============ -->
         <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,10">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -17,15 +17,15 @@
                 </Grid.ColumnDefinitions>
                 <ui:SymbolIcon Symbol="Desktop24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
                 <StackPanel Grid.Column="1">
-                    <TextBlock Text="双击桌面隐藏图标" Style="{StaticResource SettingsCardTitle}" />
-                    <TextBlock Text="在桌面空白处双击渐隐隐藏全部图标，再次双击渐显恢复；双击图标正常打开应用，不受影响"
+                    <TextBlock Text="Скрывать значки двойным кликом" Style="{StaticResource SettingsCardTitle}" />
+                    <TextBlock Text="Двойной клик по пустому месту рабочего стола плавно скрывает все ярлыки, повторный — возвращает обратно. Открытию программ по ярлыкам не мешает."
                                Style="{StaticResource SettingsCardDescription}" />
                 </StackPanel>
                 <ui:ToggleSwitch x:Name="DoubleClickHideToggle" Grid.Column="2" VerticalAlignment="Center" />
             </Grid>
         </Border>
 
-        <!-- ============ 图标透明度 ============ -->
+        <!-- ============ Прозрачность значков ============ -->
         <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,10">
             <StackPanel>
                 <Grid>
@@ -35,7 +35,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ui:SymbolIcon Symbol="ColorBackground24" Style="{StaticResource SettingsCardIcon}" Margin="0,0,14,0" />
-                    <TextBlock Grid.Column="1" Text="桌面图标透明度" Style="{StaticResource SettingsCardTitle}"
+                    <TextBlock Grid.Column="1" Text="Прозрачность значков рабочего стола" Style="{StaticResource SettingsCardTitle}"
                                VerticalAlignment="Center" />
                     <TextBlock x:Name="OpacityValueText" Grid.Column="2" Text="100%" MinWidth="48"
                                TextAlignment="Right" FontSize="13"
@@ -45,9 +45,9 @@
                         Minimum="20" Maximum="100" Value="100"
                         SmallChange="1" LargeChange="5"
                         ValueChanged="IconOpacitySlider_ValueChanged" />
-                <TextBlock Margin="0,8,0,0" FontSize="12"
+                <TextBlock Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap"
                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                           Text="拖动滑块实时预览，100% 为系统默认完全不透明；退出 MuSync 后自动恢复默认" />
+                           Text="Эффект применяется сразу при перетаскивании ползунка (100% — стандартная непрозрачность). После выхода из MuSync значение сбрасывается." />
             </StackPanel>
         </Border>
 

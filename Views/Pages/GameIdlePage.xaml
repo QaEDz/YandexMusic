@@ -5,9 +5,9 @@
       Background="Transparent">
     <StackPanel MaxWidth="760" Margin="12,8,12,20">
 
-        <TextBlock Text="挂游戏时长" Style="{StaticResource SettingsSectionHeader}" />
+        <TextBlock Text="Фарм часов в играх" Style="{StaticResource SettingsSectionHeader}" />
 
-        <!-- ============ 说明 ============ -->
+        <!-- ============ Описание ============ -->
         <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,10">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -17,19 +17,19 @@
                 <ui:SymbolIcon Symbol="Games24" Style="{StaticResource SettingsCardIcon}"
                                VerticalAlignment="Top" Margin="0,2,14,0" />
                 <StackPanel Grid.Column="1">
-                    <TextBlock Text="游戏时长挂机" Style="{StaticResource SettingsCardTitle}" FontWeight="SemiBold" />
+                    <TextBlock Text="Набор часов и карточек Steam" Style="{StaticResource SettingsCardTitle}" FontWeight="SemiBold" />
                     <TextBlock Style="{StaticResource SettingsCardDescription}" Margin="0,3,0,0"
                                TextWrapping="Wrap"
-                               Text="勾选库存中的游戏（最多同时 30 个），MuSync 会让 Steam 统计这些游戏的游玩时长，也适用于集换式卡牌掉落。音乐状态推送不中断，音乐文本始终排在状态首位；停止后自动恢复为纯音乐状态。" />
+                               Text="Выберите игры из вашей библиотеки (до 30 одновременно): Steam будет засчитывать игровое время и выбивать коллекционные карточки. Синхронизация музыки при этом не прерывается — трек остаётся на первом месте в статусе." />
                 </StackPanel>
             </Grid>
         </Border>
 
-        <!-- ============ 控制条 ============ -->
+        <!-- ============ Панель управления ============ -->
         <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,10">
             <StackPanel>
                 <Grid>
-                    <TextBlock x:Name="IdleStateText" Style="{StaticResource SettingsCardTitle}" Text="未开始" />
+                    <TextBlock x:Name="IdleStateText" Style="{StaticResource SettingsCardTitle}" Text="Не запущено" />
                     <TextBlock x:Name="IdleElapsedText" HorizontalAlignment="Right" FontSize="12"
                                Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="" />
                 </Grid>
@@ -39,22 +39,22 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ui:TextBox x:Name="SearchBox" PlaceholderText="搜索游戏名称或 AppID…"
+                    <ui:TextBox x:Name="SearchBox" PlaceholderText="Поиск по названию или AppID…"
                                 TextChanged="SearchBox_TextChanged" />
-                    <ui:Button x:Name="RefreshButton" Grid.Column="1" Content="刷新库存" Margin="10,0,0,0"
+                    <ui:Button x:Name="RefreshButton" Grid.Column="1" Content="Обновить библиотеку" Margin="10,0,0,0"
                                VerticalAlignment="Center" Click="RefreshButton_Click" />
                 </Grid>
 
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <ui:Button x:Name="StartButton" Content="开始挂时长" Appearance="Primary"
+                    <ui:Button x:Name="StartButton" Content="Запустить фарм" Appearance="Primary"
                                Click="StartButton_Click" />
-                    <ui:Button x:Name="StopButton" Content="停止挂时长" Margin="10,0,0,0"
+                    <ui:Button x:Name="StopButton" Content="Остановить" Margin="10,0,0,0"
                                Visibility="Collapsed" Click="StopButton_Click" />
                     <ui:ProgressRing x:Name="LoadingRing" Margin="12,0,0,0" Width="22" Height="22"
                                      IsIndeterminate="True" Visibility="Collapsed" />
                     <TextBlock x:Name="SelectionCountText" VerticalAlignment="Center" Margin="14,0,0,0"
                                FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                               Text="已选 0/30" />
+                               Text="Выбрано: 0/30" />
                     <TextBlock x:Name="ProgressText" VerticalAlignment="Center" Margin="14,0,0,0"
                                FontSize="12" Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                                Text="" />
@@ -62,7 +62,7 @@
             </StackPanel>
         </Border>
 
-        <!-- ============ 游戏列表（固定高度，内部自滚动） ============ -->
+        <!-- ============ Список игр ============ -->
         <Border Style="{StaticResource SettingsCard}" Margin="0,0,0,10">
             <ListBox x:Name="GamesListBox" Height="440" Background="Transparent" BorderThickness="0"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -90,7 +90,7 @@
 
         <TextBlock Margin="4,2,4,0" FontSize="12" TextWrapping="Wrap"
                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                   Text="库存列表来自 Steam 许可证与 PICS 产品信息，缓存在本地；购买新游戏后点「刷新库存」。只有账号拥有的游戏才会计时，免费游戏需先在 Steam 商店添加入库。" />
+                   Text="Список загружается из лицензий Steam и кэшируется локально. После покупки новых игр нажмите «Обновить библиотеку». Время засчитывается только для игр на аккаунте (бесплатные нужно сначала добавить в библиотеку)." />
 
     </StackPanel>
 </Page>
