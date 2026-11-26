@@ -20,7 +20,7 @@
                 </StackPanel>
                 <TextBlock Margin="0,14,0,0" TextWrapping="Wrap" FontSize="13"
                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                           Text="Показывает текущий трек из Яндекс Музыки, NetEase Music, QQ Music и Soda Music в вашем статусе Steam. Также поддерживает пользовательскую подпись и фарм игровых часов." />
+                           Text="Показывает текущий трек из Яндекс Музыки, NetEase Music, QQ Music и Soda Music в вашем статусе Steam. Также поддерживает пользовательскую подпись и фарм игровых часов. Форк kernel12345/musync от QaEDZ." />
                 <TextBlock x:Name="RuntimeText" Margin="0,10,0,0" FontSize="12"
                            Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="" />
             </StackPanel>
@@ -31,11 +31,17 @@
             <StackPanel>
                 <TextBlock Text="Ссылки проекта" Style="{StaticResource SettingsCardTitle}" />
                 <TextBlock Margin="0,8,0,0" FontSize="13">
+                    <Run Text="Форк (QaEDZ): " Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                    <Hyperlink NavigateUri="https://github.com/QaEDz/musync-YandexMusic"
+                               RequestNavigate="Link_RequestNavigate">github.com/QaEDz/musync-YandexMusic</Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="0,6,0,0" FontSize="13">
+                    <Run Text="Оригинал: " Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                     <Hyperlink NavigateUri="https://github.com/kernel12345/musync"
                                RequestNavigate="Link_RequestNavigate">github.com/kernel12345/musync</Hyperlink>
                 </TextBlock>
                 <TextBlock Margin="0,6,0,0" FontSize="13">
-                    <Hyperlink NavigateUri="https://github.com/kernel12345/musync/releases"
+                    <Hyperlink NavigateUri="https://github.com/QaEDz/musync-YandexMusic/releases"
                                RequestNavigate="Link_RequestNavigate">Скачать последнюю версию (Releases)</Hyperlink>
                 </TextBlock>
             </StackPanel>
